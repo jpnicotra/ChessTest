@@ -1,10 +1,16 @@
 package com.jpn.chesstest.ui;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JFileChooser;
+
+/**
+ * ActionListener that allows users to choose one movement file to start game
+ * @author jnicotra
+ * @since 1.0
+ */
 public class OpenFileAction implements ActionListener {
     private final ChessTestGame chessTestGame;
 

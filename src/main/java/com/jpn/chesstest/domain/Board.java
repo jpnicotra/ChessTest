@@ -1,7 +1,5 @@
 package com.jpn.chesstest.domain;
 
-import org.springframework.stereotype.Service;
-
 import com.jpn.chesstest.domain.pieces.Bishop;
 import com.jpn.chesstest.domain.pieces.King;
 import com.jpn.chesstest.domain.pieces.Knight;
@@ -9,24 +7,43 @@ import com.jpn.chesstest.domain.pieces.Pawn;
 import com.jpn.chesstest.domain.pieces.Queen;
 import com.jpn.chesstest.domain.pieces.Rook;
 
-@Service
+/**
+* Represents the chess board
+* 
+* @see CellBoard
+* @author      Juan Pablo Nicotra
+* @since       1.0
+*/
 public class Board {
-	private CellBoard cells[][] = new CellBoard[8][8];
+	private static final int rows = 8;
+	private static final int cols = 8;
+	private CellBoard cells[][] = new CellBoard[rows][cols];
 	
+	/**
+	* Represents the chess board
+	*
+	* @see CellBoard
+	* @param position Position of the cell we need
+	* @return CellBoard for the requested position or null if it's out of boundary
+	*/
 	public CellBoard getCell (Position position) {
-		// TODO Controlar las posiciones y si hay espacios.
-		
-		if (position!=null) {
+		if (position!=null && position.getRow()<rows && position.getCol()<cols) {
 			return cells[position.getRow()][position.getCol()];
 		}
 		
 		return null;
 	}
 	
+	/**
+	* Initialize chess board with both players pieces
+	*
+	* @see Player
+	* @param players List of players
+	*/
 	public void newGame (java.util.List<Player> players) {
 		boolean cellBlack = true;
-		for (int row=0;row<8;row++) {
-			for (int col=0;col<8;col++) {
+		for (int row=0;row<rows;row++) {
+			for (int col=0;col<cols;col++) {
 				Position position = new Position (row, col);
 				CellBoard.CellType cellType;
 				if (cellBlack) {
@@ -38,11 +55,12 @@ public class Board {
 				cellBlack=!cellBlack;
 				cells[row][col] = new CellBoard (cellType, position);
 			}
-			// At the end of each row the following starts with the same color that we use in prior cell. That's
-			// why I am setting cell to previous color
+			// At the end of each row, the following should start with the same color
+			// that we use in prior cell. That's why I am setting cell to previous color
 			cellBlack=!cellBlack;
 		}
 		
+		// Initialize each player with the corresponding pieces
 		for (int i=0;i<players.size();i++) {
 			Player player = players.get(i);
 			Side side = players.get(i).getSide();
@@ -64,6 +82,10 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Returns a character string representation of this class
+	 * @return	String representation
+	 */
 	@Override
 	public String toString() {
 		String print = "\t";

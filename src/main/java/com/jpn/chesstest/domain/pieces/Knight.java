@@ -4,8 +4,35 @@ import com.jpn.chesstest.domain.CellBoard;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
 
+/**
+ * Knight piece 
+ * 
+ * @author jnicotra
+ * @since 1.0
+ */
 public class Knight extends Piece {
 
+	/**
+	 * Default constructor
+	 * @see Side
+	 * @see CellBoard
+	 * @param side
+	 * @param currentPosition
+	 */
+	public Knight(Side side, CellBoard currentPosition) {
+		super(PieceType.KNIGHT, side, currentPosition);
+
+		if (getSide().isWhite())
+			setCharCode("\u2658");
+		else
+			setCharCode("\u265E");
+	}
+
+	/**
+	 * Check if new position it's valid for this piece
+	 * @param to New position
+	 * @return true or false
+	 */
 	public boolean checkMoveIsValid(Position to) {
 		if (super.checkMoveIsValid(to)) {
 			Position actual = getCurrentPosition().getPosition();
@@ -18,14 +45,5 @@ public class Knight extends Piece {
 				return false;
 		}
 		return false;
-	}
-
-	public Knight(Side side, CellBoard currentPosition) {
-		super(PieceType.KNIGHT, side, currentPosition);
-
-		if (getSide().isWhite())
-			setCharCode("\u2658");
-		else
-			setCharCode("\u265E");
 	}
 }

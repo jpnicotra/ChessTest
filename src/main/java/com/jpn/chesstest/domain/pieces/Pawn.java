@@ -5,9 +5,22 @@ import com.jpn.chesstest.domain.Game;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
 
+/**
+ * Pawn piece 
+ * 
+ * @author jnicotra
+ * @since 1.0
+ */
 public class Pawn extends Piece {
 	private boolean firstMove=true;
 	
+	/**
+	 * Default constructor
+	 * @see Side
+	 * @see CellBoard
+	 * @param side
+	 * @param currentPosition
+	 */
 	public Pawn (Side side, CellBoard currentPosition) {
 		super(PieceType.PAWN, side, currentPosition);
 		if (getSide().isWhite())
@@ -21,6 +34,11 @@ public class Pawn extends Piece {
 		this.firstMove = false;
 	}
 
+	/**
+	 * Check if new position it's valid for this piece
+	 * @param to New position
+	 * @return true or false
+	 */
 	public boolean checkMoveIsValid(Position to) {
 		if (super.checkMoveIsValid(to)) {
 			Game game = this.getSide().getGame();

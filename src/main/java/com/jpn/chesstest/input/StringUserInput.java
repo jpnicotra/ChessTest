@@ -4,6 +4,12 @@ import java.io.IOException;
 
 import com.whitehatgaming.UserInput;
 
+/**
+ * This class allows users to send moves using String insted of reading moves from file
+ * @author jnicotra
+ * @see UserInput
+ * @since 1.0
+ */
 public class StringUserInput implements UserInput {
 	private String[] lines;
 	private int index;

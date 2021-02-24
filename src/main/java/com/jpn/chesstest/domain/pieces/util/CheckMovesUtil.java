@@ -5,8 +5,22 @@ import com.jpn.chesstest.domain.Game;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
 
+/**
+ * This class help checking movements validations
+ * 
+ * @author jnicotra
+ * @since 1.0
+ */
 public class CheckMovesUtil {
 
+	/**
+	 * Check diagonal movement of this piece and also verifies if the way it's clear!
+	 * @param game Game
+	 * @param currentSide Current side
+	 * @param actual Starting position
+	 * @param to Ending position
+	 * @return
+	 */
 	public static boolean checkDiagonalMovement(Game game, Side currentSide, Position actual, Position to) {
 		int diffRows = actual.getRow()-to.getRow();
 		int diffCols = actual.getCol()-to.getCol();
@@ -40,6 +54,15 @@ public class CheckMovesUtil {
 		return true;
 	}
 
+
+	/**
+	 * Check straight movement of this piece and also verifies if the way it's clear!
+	 * @param game Game
+	 * @param currentSide Current side
+	 * @param actual Starting position
+	 * @param to Ending position
+	 * @return
+	 */
 	public static boolean checkStraightMovement(Game game, Side currentSide, Position actual, Position to) {
 		int diffRows = actual.getRow()-to.getRow();
 		int diffCols = actual.getCol()-to.getCol();
@@ -60,11 +83,13 @@ public class CheckMovesUtil {
 				
 				// Another piece is in the way of this Rook!!!
 				if (cell.getPiece()!=null) {
-					if (i==to.getRow() && !cell.getPiece().getSide().equals(currentSide)) {
-						return true;
-					}
-					else { 
+					if (i!=to.getRow()) {
 						return false;
+					}
+					else {
+						// Is the destination cell and the piece is from the other side
+						if (cell.getPiece().getSide().equals(currentSide))
+							return false;
 					}
 				}
 			}
@@ -83,11 +108,13 @@ public class CheckMovesUtil {
 				
 				// Another piece is in the way of this Rook!!!
 				if (cell.getPiece()!=null) {
-					if (i==to.getRow() && !cell.getPiece().getSide().equals(currentSide)) {
-						return true;
-					}
-					else { 
+					if (i!=to.getCol()) {
 						return false;
+					}
+					else {
+						// Is the destination cell and the piece is from the other side
+						if (cell.getPiece().getSide().equals(currentSide))
+							return false;
 					}
 				}
 			}
