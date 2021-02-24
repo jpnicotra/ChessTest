@@ -8,4 +8,5 @@ b5b6
 e7e6
 f1c4
 d6d5
+e6d7
 b6a6

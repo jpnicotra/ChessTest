@@ -53,7 +53,7 @@ public abstract class Piece {
 	public void setCurrentPosition(CellBoard currentPosition) {
 		// moves piece from prior position to the new position
 		if (this.currentPosition!=null)
-			currentPosition.setPiece(null);
+			this.currentPosition.setPiece(null);
 		this.currentPosition = currentPosition;
 		this.currentPosition.setPiece (this);
 	}

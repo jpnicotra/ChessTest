@@ -24,6 +24,6 @@ public class AnotherPieceInCellException extends ChessTestException {
 
 	@Override
 	public String getMessage() {
-		return getPlayer().getSide()+" - You have another piece in cell " + getMove().getPositionTo();
+		return getPlayer().getSide()+" - You can't move from "+getMove().getPositionFrom()+" to "+ getMove().getPositionTo()+" because you have another piece in that cell";
 	}	
 }

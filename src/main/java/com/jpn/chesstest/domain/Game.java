@@ -4,6 +4,7 @@ import com.jpn.chesstest.domain.pieces.Piece;
 import com.jpn.chesstest.exceptions.AnotherPieceInCellException;
 import com.jpn.chesstest.exceptions.ChessTestException;
 import com.jpn.chesstest.exceptions.InvalidMovementException;
+import com.jpn.chesstest.exceptions.KingInCheckException;
 import com.jpn.chesstest.exceptions.MovingOpponentPieceException;
 import com.jpn.chesstest.exceptions.NoPieceInCellException;
 
@@ -95,21 +96,37 @@ public class Game {
 		if (!piece.checkMoveIsValid(move.getPositionTo())) {
 			throw new InvalidMovementException(currentPlayer, move);
 		}
-		cellFrom.setPiece(null);
+		
 		piece.setCurrentPosition(cellTo);
 		
+		Player next = getNextPlayer();
+		Piece yourPieceInCheck = getPieceInCheck(next);
+		if (yourPieceInCheck !=null) {
+			piece.setCurrentPosition(cellFrom);
+			throw new KingInCheckException(currentPlayer, move);
+		}
 		
-		Piece pieceInCheck = getPieceInCheck();
+
+		piece.setCurrentPosition(cellTo);
 		
+		Piece pieceInCheck = getPieceInCheck(currentPlayer);
+		changeToNextPlayer();
+		
+		return pieceInCheck;
+	}
+	
+	private void changeToNextPlayer() {
+		currentPlayer = getNextPlayer();
+	}
+
+	private Player getNextPlayer() {
 		int index = players.indexOf(currentPlayer);
 		index += 1;
 
 		if (index >= players.size())
 			index = 0;
 		
-		currentPlayer = players.get(index);
-		
-		return pieceInCheck;
+		return players.get(index);
 	}
 
 	/**
@@ -156,18 +173,18 @@ public class Game {
 	 * @see Piece
 	 * @return	Returns piece in check otherwise null
 	 */
-	public Piece getPieceInCheck() {
+	public Piece getPieceInCheck(Player actualPlayer) {
 		for (int i=0;i<this.getPlayers().size();i++) {
 			Player player = getPlayers().get(i);
 			
-			// Check if this player its current Player opponent
-			if (!player.equals(currentPlayer)) {
+			// Check if this player its actual Player opponent
+			if (!player.equals(actualPlayer)) {
 				Side otherSide = player.getSide();
 
 				// Get's opponent King
 				Piece endingPiece = otherSide.getKing();
 				
-				java.util.List<Piece> pieces = currentPlayer.getSide().getPieces();
+				java.util.List<Piece> pieces = actualPlayer.getSide().getPieces();
 				// Simulates if it's possible to attack opponent King piece
 				for (int pieceIndex=0;pieceIndex<pieces.size();pieceIndex++) {
 					Piece piece = pieces.get(pieceIndex);
