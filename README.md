@@ -15,6 +15,12 @@ Install maven dependencies
 ```sh
 mvn clean install
 ```
+
+Generate Javadoc
+```sh
+mvn javadoc:javadoc
+```
+
 ## Execution
 
 ```sh
@@ -30,13 +36,15 @@ mvn compile exec:java
 
 ## Chess Movements Example
 
-> e2e4
-> e7e5
-> f1c4
-> b8c6
-> d1f3
-> d7d6
-> f3f7
+```sh
+e2e4
+e7e5
+f1c4
+b8c6
+d1f3
+d7d6
+f3f7
+```
 
 ## Tech
 
