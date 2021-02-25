@@ -1,4 +1,4 @@
-package com.jpn.chesstest.domain.pieces;
+package com.jpn.chesstest.domain.chess.pieces;
 
 import com.jpn.chesstest.domain.CellBoard;
 import com.jpn.chesstest.domain.Position;

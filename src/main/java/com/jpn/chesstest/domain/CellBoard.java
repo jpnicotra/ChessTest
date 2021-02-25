@@ -1,6 +1,6 @@
 package com.jpn.chesstest.domain;
 
-import com.jpn.chesstest.domain.pieces.Piece;
+import com.jpn.chesstest.domain.chess.pieces.Piece;
 
 /**
 * Represents one cell of the chessboard

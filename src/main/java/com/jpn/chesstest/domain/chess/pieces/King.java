@@ -1,9 +1,10 @@
-package com.jpn.chesstest.domain.pieces;
+package com.jpn.chesstest.domain.chess.pieces;
 
 import com.jpn.chesstest.domain.CellBoard;
-import com.jpn.chesstest.domain.Game;
+import com.jpn.chesstest.domain.BoardGame;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
+import com.jpn.chesstest.domain.chess.ChessSide;
 
 /**
  * King piece 
@@ -19,9 +20,9 @@ import com.jpn.chesstest.domain.Side;
 	 * @param side
 	 * @param currentPosition
 	 */
-	public King (Side side, CellBoard currentPosition) {
+	public King (ChessSide side, CellBoard currentPosition) {
 		super(PieceType.KING, side, currentPosition);
-		if (getSide().isWhite())
+		if (side.isWhite())
 			setCharCode("\u2654");
 		else
 			setCharCode("\u265A");
@@ -36,7 +37,7 @@ import com.jpn.chesstest.domain.Side;
 	 */
 	public boolean checkMoveIsValid(Position to) {
 		if (super.checkMoveIsValid(to)) {
-			Game game = this.getSide().getGame();
+			BoardGame game = this.getSide().getGame();
 			Position actual = getCurrentPosition().getPosition();
 			int diffRows = Math.abs(to.getRow()-actual.getRow());
 			int diffCols = Math.abs(actual.getCol()-to.getCol());

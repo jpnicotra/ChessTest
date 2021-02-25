@@ -1,10 +1,11 @@
-package com.jpn.chesstest.domain.pieces;
+package com.jpn.chesstest.domain.chess.pieces;
 
+import com.jpn.chesstest.domain.BoardGame;
 import com.jpn.chesstest.domain.CellBoard;
-import com.jpn.chesstest.domain.Game;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
-import com.jpn.chesstest.domain.pieces.util.CheckMovesUtil;
+import com.jpn.chesstest.domain.chess.ChessSide;
+import com.jpn.chesstest.domain.chess.pieces.util.CheckMovesUtil;
 
 /**
  * Rook piece 
@@ -21,9 +22,9 @@ public class Rook extends Piece {
 	 * @param side
 	 * @param currentPosition
 	 */
-	public Rook (Side side, CellBoard currentPosition) {
+	public Rook (ChessSide side, CellBoard currentPosition) {
 		super(PieceType.ROOK, side, currentPosition);
-		if (getSide().isWhite())
+		if (side.isWhite())
 			setCharCode("\u2656");
 		else
 			setCharCode("\u265C");
@@ -36,7 +37,7 @@ public class Rook extends Piece {
 	 */
 	public boolean checkMoveIsValid(Position to) {
 		if (super.checkMoveIsValid(to)) {
-			Game game = this.getSide().getGame();
+			BoardGame game = this.getSide().getGame();
 			Position actual = getCurrentPosition().getPosition();
 			return CheckMovesUtil.checkStraightMovement(game, getSide(), actual, to);
 		}

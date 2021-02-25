@@ -29,11 +29,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.jpn.chesstest.domain.BoardGame;
 import com.jpn.chesstest.domain.CellBoard;
-import com.jpn.chesstest.domain.Game;
 import com.jpn.chesstest.domain.Move;
 import com.jpn.chesstest.domain.Position;
-import com.jpn.chesstest.domain.pieces.Piece;
+import com.jpn.chesstest.domain.chess.ChessGame;
+import com.jpn.chesstest.domain.chess.pieces.Piece;
 import com.jpn.chesstest.input.StringUserInput;
 import com.whitehatgaming.UserInput;
 import com.whitehatgaming.UserInputFile;
@@ -56,7 +57,7 @@ public class ChessTestGame implements Runnable {
 	private final JLabel movLabel = new JLabel (".");
 	private final JButton[][] chessBoardSquares = new JButton[8][8];
 	private static final String COLS = "ABCDEFGH";
-	private Game game;
+	private BoardGame game;
 	private UserInput input;
 
 	public ChessTestGame() {
@@ -166,7 +167,7 @@ public class ChessTestGame implements Runnable {
 		try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class)) {
 			input = new UserInputFile(fileName);
 
-			game = context.getBean(Game.class);
+			game = context.getBean(BoardGame.class);
 			game.newGame();
 
 		} catch (Exception e) {
@@ -183,7 +184,7 @@ public class ChessTestGame implements Runnable {
 		try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class)) {
 			input = new StringUserInput(moves);
 
-			game = context.getBean(Game.class);
+			game = context.getBean(BoardGame.class);
 			game.newGame();
 
 		} catch (Exception e) {
@@ -213,8 +214,8 @@ public class ChessTestGame implements Runnable {
 	@Configuration
 	static class Config {
 		@Bean
-		public Game game() {
-			return new Game();
+		public BoardGame game() {
+			return new ChessGame();
 		}
 	}
 

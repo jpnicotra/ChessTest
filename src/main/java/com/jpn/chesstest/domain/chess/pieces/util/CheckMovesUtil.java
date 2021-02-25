@@ -1,7 +1,7 @@
-package com.jpn.chesstest.domain.pieces.util;
+package com.jpn.chesstest.domain.chess.pieces.util;
 
 import com.jpn.chesstest.domain.CellBoard;
-import com.jpn.chesstest.domain.Game;
+import com.jpn.chesstest.domain.BoardGame;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
 
@@ -21,7 +21,7 @@ public class CheckMovesUtil {
 	 * @param to Ending position
 	 * @return
 	 */
-	public static boolean checkDiagonalMovement(Game game, Side currentSide, Position actual, Position to) {
+	public static boolean checkDiagonalMovement(BoardGame game, Side currentSide, Position actual, Position to) {
 		int diffRows = actual.getRow()-to.getRow();
 		int diffCols = actual.getCol()-to.getCol();
 		
@@ -63,7 +63,7 @@ public class CheckMovesUtil {
 	 * @param to Ending position
 	 * @return
 	 */
-	public static boolean checkStraightMovement(Game game, Side currentSide, Position actual, Position to) {
+	public static boolean checkStraightMovement(BoardGame game, Side currentSide, Position actual, Position to) {
 		int diffRows = actual.getRow()-to.getRow();
 		int diffCols = actual.getCol()-to.getCol();
 		

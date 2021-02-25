@@ -1,4 +1,6 @@
-package com.jpn.chesstest.domain;
+package com.jpn.chesstest.domain.chess;
+
+import com.jpn.chesstest.domain.Side;
 
 /**
 * Represents white pieces side
@@ -7,7 +9,7 @@ package com.jpn.chesstest.domain;
 * @author      Juan Pablo Nicotra
 * @since       1.0
 */
-public class WhiteSide extends Side {
+public class WhiteSide extends ChessSide {
 
 	/**
 	* Indicates if this piece is from white side. In this case, it will always return false

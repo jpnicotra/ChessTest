@@ -5,4 +5,4 @@
  * @author jnicotra
  * @since 1.0
  */
-package com.jpn.chesstest.domain.pieces;
+package com.jpn.chesstest.domain.chess.pieces;

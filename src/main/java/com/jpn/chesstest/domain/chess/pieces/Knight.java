@@ -1,8 +1,9 @@
-package com.jpn.chesstest.domain.pieces;
+package com.jpn.chesstest.domain.chess.pieces;
 
 import com.jpn.chesstest.domain.CellBoard;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
+import com.jpn.chesstest.domain.chess.ChessSide;
 
 /**
  * Knight piece 
@@ -19,10 +20,10 @@ public class Knight extends Piece {
 	 * @param side
 	 * @param currentPosition
 	 */
-	public Knight(Side side, CellBoard currentPosition) {
+	public Knight(ChessSide side, CellBoard currentPosition) {
 		super(PieceType.KNIGHT, side, currentPosition);
 
-		if (getSide().isWhite())
+		if (side.isWhite())
 			setCharCode("\u2658");
 		else
 			setCharCode("\u265E");

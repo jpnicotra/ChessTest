@@ -1,6 +1,13 @@
-package com.jpn.chesstest.domain;
+package com.jpn.chesstest.domain.chess;
 
-import com.jpn.chesstest.domain.pieces.Piece;
+import java.util.List;
+
+import com.jpn.chesstest.domain.Board;
+import com.jpn.chesstest.domain.BoardGame;
+import com.jpn.chesstest.domain.CellBoard;
+import com.jpn.chesstest.domain.Move;
+import com.jpn.chesstest.domain.Player;
+import com.jpn.chesstest.domain.chess.pieces.Piece;
 import com.jpn.chesstest.exceptions.AnotherPieceInCellException;
 import com.jpn.chesstest.exceptions.ChessTestException;
 import com.jpn.chesstest.exceptions.InvalidMovementException;
@@ -9,67 +16,44 @@ import com.jpn.chesstest.exceptions.MovingOpponentPieceException;
 import com.jpn.chesstest.exceptions.NoPieceInCellException;
 
 /**
-* Game is the class that represents and contains information about:
-* <ul>
-* <li>Board</li>
-* <li>Players</li>
-* <li>Game status (current player, piece in check, etc)</li>
-* </ul>
-* Also allow us to execute next move
+* ChessGame it's an specific implementation of a Chess game
 * 
 * @author      Juan Pablo Nicotra
 * @since       1.0
 */
-public class Game {
-	/**
-	 * Board representing this game
-	 * @See com.jpn.chesstest.domain.Board
-	 */
-	private Board board;
-	/**
-	 * List of players involve in this game
-	 * @See com.jpn.chesstest.domain.Player
-	 */
-	private java.util.List<Player> players;
-	/**
-	 * Player that has to do the next move
-	 * @See com.jpn.chesstest.domain.Player
-	 */
-	private Player currentPlayer;
-
-	/**
-	 * Default constructor
-	 */
-	public Game() {
-	}
+public class ChessGame extends BoardGame {
 
 	/**
 	 * This method is called when you want to start a fresh game. This will put both players and
 	 * restart board and pieces for a fresh start.
 	 */
 	public void newGame() {
-		players = new java.util.LinkedList<Player>();
-		Player whitePlayer = new Player();
+		List<Player> players = new java.util.LinkedList<Player>();
+		ChessPlayer whitePlayer = new ChessPlayer();
 		WhiteSide white = new WhiteSide();
 		white.setGame(this);
 		whitePlayer.setSide(white);
 		whitePlayer.setName("White Player");
 		whitePlayer.setStartRow(7);
-		whitePlayer.setDirection(Player.UP_DIRECTION);
+		whitePlayer.setDirection(ChessPlayer.UP_DIRECTION);
 		players.add(whitePlayer);
 
-		Player blackPlayer = new Player();
+		ChessPlayer blackPlayer = new ChessPlayer();
 		BlackSide black = new BlackSide();
 		black.setGame(this);
 		blackPlayer.setSide(black);
 		blackPlayer.setName("Black Player");
 		blackPlayer.setStartRow(0);
-		blackPlayer.setDirection(Player.DOWN_DIRECTION);
+		blackPlayer.setDirection(ChessPlayer.DOWN_DIRECTION);
 		players.add(blackPlayer);
 
-		board = new Board();
+		Board board = new Chessboard();
 		board.newGame(players);
-		currentPlayer = players.get(0);
+		Player currentPlayer = players.get(0);
+
+		setPlayers(players);
+		setBoard(board);
+		setCurrentPlayer(currentPlayer);
 	}
 
 	/**
@@ -81,20 +65,20 @@ public class Game {
 	 */
 	public Piece doMove(Move move) throws ChessTestException {
 		System.out.println("\tMove from " + move.getPositionFrom() + " to " + move.getPositionTo());
-		CellBoard cellFrom = board.getCell(move.getPositionFrom());
+		CellBoard cellFrom = getBoard().getCell(move.getPositionFrom());
 		if (cellFrom.getPiece() == null)
-			throw new NoPieceInCellException(currentPlayer, move);
+			throw new NoPieceInCellException(getCurrentPlayer(), move);
 
-		CellBoard cellTo = board.getCell(move.getPositionTo());
-		if (cellTo.getPiece() != null && cellTo.getPiece().getSide().equals(currentPlayer.getSide()))
-			throw new AnotherPieceInCellException(currentPlayer, move);
+		CellBoard cellTo = getBoard().getCell(move.getPositionTo());
+		if (cellTo.getPiece() != null && cellTo.getPiece().getSide().equals(getCurrentPlayer().getSide()))
+			throw new AnotherPieceInCellException(getCurrentPlayer(), move);
 
 		Piece piece = cellFrom.getPiece();
-		if (!piece.getSide().equals(currentPlayer.getSide()))
-			throw new MovingOpponentPieceException(currentPlayer, move);
+		if (!piece.getSide().equals(getCurrentPlayer().getSide()))
+			throw new MovingOpponentPieceException(getCurrentPlayer(), move);
 
 		if (!piece.checkMoveIsValid(move.getPositionTo())) {
-			throw new InvalidMovementException(currentPlayer, move);
+			throw new InvalidMovementException(getCurrentPlayer(), move);
 		}
 		
 		piece.setCurrentPosition(cellTo);
@@ -103,32 +87,18 @@ public class Game {
 		Piece yourPieceInCheck = getPieceInCheck(next);
 		if (yourPieceInCheck !=null) {
 			piece.setCurrentPosition(cellFrom);
-			throw new KingInCheckException(currentPlayer, move);
+			throw new KingInCheckException(getCurrentPlayer(), move);
 		}
 		
 
 		piece.setCurrentPosition(cellTo);
 		
-		Piece pieceInCheck = getPieceInCheck(currentPlayer);
+		Piece pieceInCheck = getPieceInCheck(getCurrentPlayer());
 		changeToNextPlayer();
 		
 		return pieceInCheck;
 	}
 	
-	private void changeToNextPlayer() {
-		currentPlayer = getNextPlayer();
-	}
-
-	private Player getNextPlayer() {
-		int index = players.indexOf(currentPlayer);
-		index += 1;
-
-		if (index >= players.size())
-			index = 0;
-		
-		return players.get(index);
-	}
-
 	/**
 	 * Returns a character string representation of the game
 	 * @return	String representation of the board with all pieces involved.
@@ -136,38 +106,11 @@ public class Game {
 	@Override
 	public String toString() {
 		String print = "";
-		print = board.toString();
+		print = getBoard().toString();
 
 		return print;
 	}
 
-	/**
-	 * Returns current board
-	 * @see Board
-	 * @return	Board object for this game
-	 */
-	public Board getBoard() {
-		return board;
-	}
-
-	/**
-	 * Method for obtaining current list of players
-	 * @see Player
-	 * @return	List of players
-	 */
-	public java.util.List<Player> getPlayers() {
-		return players;
-	}
-
-	/**
-	 * Method for obtaining current player
-	 * @see Player
-	 * @return	Current Player
-	 */
-	public Player getCurrentPlayer() {
-		return currentPlayer;
-	}
-	
 	/**
 	 * Check and verifies if King's opponent it's in check!
 	 * @see Piece
@@ -179,7 +122,7 @@ public class Game {
 			
 			// Check if this player its actual Player opponent
 			if (!player.equals(actualPlayer)) {
-				Side otherSide = player.getSide();
+				ChessSide otherSide = (ChessSide)player.getSide();
 
 				// Get's opponent King
 				Piece endingPiece = otherSide.getKing();
@@ -196,5 +139,6 @@ public class Game {
 		
 		return null;
 	}
+
 
 }

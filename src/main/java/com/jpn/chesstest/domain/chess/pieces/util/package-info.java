@@ -4,4 +4,4 @@
  * @author jnicotra
  * @since 1.0
  */
-package com.jpn.chesstest.domain.pieces.util;
+package com.jpn.chesstest.domain.chess.pieces.util;

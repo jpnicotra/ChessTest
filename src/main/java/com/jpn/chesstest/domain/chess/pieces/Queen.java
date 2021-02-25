@@ -1,10 +1,11 @@
-package com.jpn.chesstest.domain.pieces;
+package com.jpn.chesstest.domain.chess.pieces;
 
+import com.jpn.chesstest.domain.BoardGame;
 import com.jpn.chesstest.domain.CellBoard;
-import com.jpn.chesstest.domain.Game;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
-import com.jpn.chesstest.domain.pieces.util.CheckMovesUtil;
+import com.jpn.chesstest.domain.chess.ChessSide;
+import com.jpn.chesstest.domain.chess.pieces.util.CheckMovesUtil;
 
 /**
  * Queen piece 
@@ -21,9 +22,9 @@ public class Queen extends Piece {
 	 * @param side
 	 * @param currentPosition
 	 */
-	public Queen (Side side, CellBoard currentPosition) {
+	public Queen (ChessSide side, CellBoard currentPosition) {
 		super(PieceType.QUEEN, side, currentPosition);
-		if (getSide().isWhite())
+		if (side.isWhite())
 			setCharCode("\u2655");
 		else
 			setCharCode("\u265B");
@@ -36,7 +37,7 @@ public class Queen extends Piece {
 	 */
 	public boolean checkMoveIsValid(Position to) {
 		if (super.checkMoveIsValid(to)) {
-			Game game = this.getSide().getGame();
+			BoardGame game = this.getSide().getGame();
 			Position actual = getCurrentPosition().getPosition();
 			
 			// Check if queen moved diagonal
