@@ -28,7 +28,7 @@ public class StringUserInput implements UserInput {
 	@Override
 	public int[] nextMove() throws IOException {
 		if (index==-1 || lines.length<=index)
-			throw new IOException ("No more moves to read");
+			return null;
 		
 		String line = lines[index];
 		

@@ -1,6 +1,6 @@
 package com.jpn.chesstest.domain;
 
-import com.jpn.chesstest.domain.chess.pieces.King;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jpn.chesstest.domain.chess.pieces.Piece;
 
 /**

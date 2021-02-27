@@ -89,4 +89,14 @@ public class CellBoard {
 			cell+="("+piece.toString()+")";
 		return cell;
 	}
+
+	public void setCellType(CellType cellType) {
+		this.cellType = cellType;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+
 }

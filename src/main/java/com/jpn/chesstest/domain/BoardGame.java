@@ -1,5 +1,6 @@
 package com.jpn.chesstest.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jpn.chesstest.domain.chess.pieces.Piece;
 import com.jpn.chesstest.exceptions.ChessTestException;
 

@@ -1,4 +1,5 @@
 package com.jpn.chesstest.domain;
+
 /**
  * Player of this game! This class also has some configuration about the starting position 
  * of each player, movement direction, etc

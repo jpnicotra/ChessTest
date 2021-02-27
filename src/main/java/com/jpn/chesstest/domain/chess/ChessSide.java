@@ -1,5 +1,6 @@
 package com.jpn.chesstest.domain.chess;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jpn.chesstest.domain.BoardGame;
 import com.jpn.chesstest.domain.Side;
 import com.jpn.chesstest.domain.chess.pieces.King;
@@ -13,8 +14,11 @@ import com.jpn.chesstest.domain.chess.pieces.Piece;
 */
 public abstract class ChessSide extends Side {
 
+	@JsonIgnore
 	private java.util.List<Piece> pieces;
+	@JsonIgnore
 	private BoardGame game;
+	@JsonIgnore
 	private King king; 
 	
 	/**

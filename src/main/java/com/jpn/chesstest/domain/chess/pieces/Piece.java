@@ -1,5 +1,6 @@
 package com.jpn.chesstest.domain.chess.pieces;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jpn.chesstest.domain.CellBoard;
 import com.jpn.chesstest.domain.Position;
 import com.jpn.chesstest.domain.Side;
@@ -13,6 +14,7 @@ import com.jpn.chesstest.domain.Side;
  */
 public abstract class Piece {
 	private PieceType pieceType;
+	@JsonIgnore
 	private CellBoard currentPosition;
 	private Side side;
 	private String charCode;
@@ -99,4 +101,14 @@ public abstract class Piece {
 	public String toString() {
 		return this.getSide()+getCharCode();
 	}
+
+	public void setPieceType(PieceType pieceType) {
+		this.pieceType = pieceType;
+	}
+
+	public void setSide(Side side) {
+		this.side = side;
+	}
+
+
 }

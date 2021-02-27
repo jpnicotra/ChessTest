@@ -1,5 +1,6 @@
 package com.jpn.chesstest.domain.chess;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jpn.chesstest.domain.Player;
 import com.jpn.chesstest.domain.Side;
 
@@ -17,7 +18,9 @@ public class ChessPlayer extends Player {
 
 	private Side side;
 	private String name;
+	@JsonIgnore
 	private int startRow;
+	@JsonIgnore
 	private int direction;
 
 	/**

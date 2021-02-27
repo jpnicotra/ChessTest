@@ -108,6 +108,22 @@ public class Chessboard extends Board {
 		}
 		return print;
 	}
+
+	public CellBoard[][] getCells() {
+		return cells;
+	}
+
+	public void setCells(CellBoard[][] cells) {
+		this.cells = cells;
+	}
+
+	public static int getRows() {
+		return rows;
+	}
+
+	public static int getCols() {
+		return cols;
+	}
 	
 
 }
