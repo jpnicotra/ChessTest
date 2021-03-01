@@ -84,7 +84,7 @@ public class Pawn extends Piece {
 			}
 
 			CellBoard cell = game.getBoard().getCell(to);
-			if (cell.getPiece() != null)
+			if (cell.getPiece() == null)
 				return false;
 			
 			return true;
