@@ -253,6 +253,23 @@ public class AppTest {
 		Assert.assertNull(pieceInCheck);
 	}
 
+	@Test 
+	public void testMovesPawnJump() throws FileNotFoundException, IOException, Exception {
+		Piece pieceInCheck = null;
+		game.newGame();
+		Assert.assertEquals(2, game.getPlayers().size());
+		Assert.assertEquals(16, game.getPlayers().get(0).getSide().getPieces().size());
+		Assert.assertEquals(16, game.getPlayers().get(1).getSide().getPieces().size());
+		
+		UserInputFile input = new UserInputFile("data"+File.separator+"junit_pawn_jump.txt");
+		int moves[]=input.nextMove();
+		while (moves!=null && moves.length==4) {
+			pieceInCheck = game.doMove(new Move(moves));
+			moves=input.nextMove();
+		}
+		Assert.assertNull(pieceInCheck);
+	}
+
 	@Configuration
 	static class Config {
 		@Bean
