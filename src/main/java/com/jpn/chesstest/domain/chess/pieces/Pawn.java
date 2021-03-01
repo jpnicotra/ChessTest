@@ -79,13 +79,11 @@ public class Pawn extends Piece {
 			if (diffCols == 1) {
 				CellBoard cell = game.getBoard().getCell(to);
 
-				if (cell.getPiece() != null && cell.getPiece().getSide().equals(getSide()))
+				if (cell.getPiece() != null &&
+					(cell.getPiece().getSide().equals(getSide()) || 
+							cell.getPiece() == null))
 					return false;
 			}
-
-			CellBoard cell = game.getBoard().getCell(to);
-			if (cell.getPiece() == null)
-				return false;
 			
 			return true;
 		}
