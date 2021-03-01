@@ -18,8 +18,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.jpn.chesstest.domain.BoardGame;
 import com.jpn.chesstest.domain.Move;
+import com.jpn.chesstest.domain.Player;
 import com.jpn.chesstest.domain.chess.ChessGame;
+import com.jpn.chesstest.domain.chess.WhiteSide;
 import com.jpn.chesstest.domain.chess.pieces.Piece;
+import com.jpn.chesstest.domain.chess.pieces.PieceType;
 import com.jpn.chesstest.exceptions.AnotherPieceInCellException;
 import com.jpn.chesstest.exceptions.InvalidMovementException;
 import com.jpn.chesstest.exceptions.KingInCheckException;
@@ -268,6 +271,40 @@ public class AppTest {
 			moves=input.nextMove();
 		}
 		Assert.assertNull(pieceInCheck);
+	}
+
+	@Test 
+	public void testPawnPromotion() throws FileNotFoundException, IOException, Exception {
+		Piece pieceInCheck = null;
+		game.newGame();
+		Assert.assertEquals(2, game.getPlayers().size());
+		Assert.assertEquals(16, game.getPlayers().get(0).getSide().getPieces().size());
+		Assert.assertEquals(16, game.getPlayers().get(1).getSide().getPieces().size());
+		
+		UserInputFile input = new UserInputFile("data"+File.separator+"junit_pawn_promotion.txt");
+		int moves[]=input.nextMove();
+		while (moves!=null && moves.length==4) {
+			pieceInCheck = game.doMove(new Move(moves));
+			moves=input.nextMove();
+		}
+		
+		int whiteQueenCount = 0;
+		java.util.List<Player> players = game.getPlayers();
+		for (int i=0;i<players.size();i++) {
+			Player player = players.get(i);
+			
+			if (player.getSide() instanceof WhiteSide) {
+				java.util.List<Piece> pieces=player.getSide().getPieces();
+				
+				for (int idxPiece=0;idxPiece<pieces.size();idxPiece++) {
+					Piece piece = pieces.get(idxPiece);
+					
+					if (piece.getPieceType() == PieceType.QUEEN)
+						whiteQueenCount+=1;
+				}
+			}
+		}
+		Assert.assertEquals(2, whiteQueenCount);
 	}
 
 	@Configuration

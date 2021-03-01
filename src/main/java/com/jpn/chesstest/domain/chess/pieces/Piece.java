@@ -110,5 +110,8 @@ public abstract class Piece {
 		this.side = side;
 	}
 
-
+	
+	public Piece getPromotionPiece() {
+		return null;
+	}
 }

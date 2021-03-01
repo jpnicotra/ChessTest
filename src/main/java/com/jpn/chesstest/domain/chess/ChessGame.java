@@ -90,6 +90,11 @@ public class ChessGame extends BoardGame {
 			throw new KingInCheckException(getCurrentPlayer(), move);
 		}
 		
+		Piece newPiece = piece.getPromotionPiece();
+		
+		if (newPiece!=null) {
+			piece = newPiece;
+		}
 
 		piece.setCurrentPosition(cellTo);
 		

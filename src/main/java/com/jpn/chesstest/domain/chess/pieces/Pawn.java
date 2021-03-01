@@ -98,4 +98,15 @@ public class Pawn extends Piece {
 		this.firstMove = firstMove;
 	}
 
+	public Piece getPromotionPiece() {
+		Queen queen = null;
+		// Check if Pawn reach the other border. Pawns, can't move backwards so if this pawn reached one of the boundaries we have to promote this piece to a Queen!
+		Position actual = this.getCurrentPosition().getPosition();
+		if (actual.getRow() == 7 || actual.getRow() == 0) {
+			System.out.println ("PROMOTION!!!");
+			queen = new Queen ((ChessSide)this.getSide(), this.getCurrentPosition());
+		}
+		
+		return queen;
+	}
 }
