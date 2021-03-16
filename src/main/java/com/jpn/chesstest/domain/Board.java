@@ -1,7 +1,7 @@
 package com.jpn.chesstest.domain;
 
 /**
-* Represents the chess board
+* Represents the board
 * 
 * @see CellBoard
 * @author      Juan Pablo Nicotra

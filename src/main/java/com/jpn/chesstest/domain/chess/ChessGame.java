@@ -65,40 +65,54 @@ public class ChessGame extends BoardGame {
 	 */
 	public Piece doMove(Move move) throws ChessTestException {
 		System.out.println("\tMove from " + move.getPositionFrom() + " to " + move.getPositionTo());
+		
+		// Get's starting cell and verifies that one piece it's in that position
 		CellBoard cellFrom = getBoard().getCell(move.getPositionFrom());
 		if (cellFrom.getPiece() == null)
 			throw new NoPieceInCellException(getCurrentPlayer(), move);
 
+		// Get's ending cell and verifies that doesn't have other piece of the same side
 		CellBoard cellTo = getBoard().getCell(move.getPositionTo());
 		if (cellTo.getPiece() != null && cellTo.getPiece().getSide().equals(getCurrentPlayer().getSide()))
 			throw new AnotherPieceInCellException(getCurrentPlayer(), move);
 
+		// Check if player it's trying to move opponent piece instead of his own pieces
 		Piece piece = cellFrom.getPiece();
 		if (!piece.getSide().equals(getCurrentPlayer().getSide()))
 			throw new MovingOpponentPieceException(getCurrentPlayer(), move);
 
+		// Call "checkMoveIsValid" method implemented for each piece type to ensure that this is a valid movement
 		if (!piece.checkMoveIsValid(move.getPositionTo())) {
 			throw new InvalidMovementException(getCurrentPlayer(), move);
 		}
 		
+		// If everything it's fine until now, set's new position of the selected piece
 		piece.setCurrentPosition(cellTo);
 		
+		// Get next player to simulate check status
 		Player next = getNextPlayer();
+		
+		// Check if currentPlayer left his pieces in check status
 		Piece yourPieceInCheck = getPieceInCheck(next);
 		if (yourPieceInCheck !=null) {
+			// If this last move put player in check, rollbacks piece to starting position and throws KingInCheckException
 			piece.setCurrentPosition(cellFrom);
 			throw new KingInCheckException(getCurrentPlayer(), move);
 		}
 		
+		// This method verifies if this movement produced a promotion of one of the pieces.
 		Piece newPiece = piece.getPromotionPiece();
-		
 		if (newPiece!=null) {
 			piece = newPiece;
+			// We ensure that this piece it's set to ending position
+			piece.setCurrentPosition(cellTo);
 		}
 
-		piece.setCurrentPosition(cellTo);
 		
+		// Check if currentPlayer left opponent pieces in check status
 		Piece pieceInCheck = getPieceInCheck(getCurrentPlayer());
+		
+		// Moves to next player
 		changeToNextPlayer();
 		
 		return pieceInCheck;

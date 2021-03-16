@@ -22,10 +22,12 @@ public class CheckMovesUtil {
 	 * @return
 	 */
 	public static boolean checkDiagonalMovement(BoardGame game, Side currentSide, Position actual, Position to) {
+		// Calculate difference between starting and ending positions in rows and cols
 		int diffRows = actual.getRow()-to.getRow();
 		int diffCols = actual.getCol()-to.getCol();
 		
-		// If Piece movement wasn't in diagonal return false
+		// If the movement was diagonal, they should have the same difference in absolute value
+		// If Piece movement wasn't diagonal return false
 		if (Math.abs(diffRows) != Math.abs(diffCols))
 			return false;
 		
@@ -64,10 +66,11 @@ public class CheckMovesUtil {
 	 * @return
 	 */
 	public static boolean checkStraightMovement(BoardGame game, Side currentSide, Position actual, Position to) {
+		// Calculate difference between starting and ending positions in rows and cols
 		int diffRows = actual.getRow()-to.getRow();
 		int diffCols = actual.getCol()-to.getCol();
 		
-		// If Piece movement wasn't int straight line return false
+		// If the movement produces difference in rows and cols, it's no a straight line movement
 		if (diffRows!=0 && diffCols!=0)
 			return false;
 
@@ -81,13 +84,13 @@ public class CheckMovesUtil {
 				pos.setRow(i);
 				CellBoard cell = game.getBoard().getCell(pos);
 				
-				// Another piece is in the way of this Rook!!!
+				// Another piece is in the way of this Piece!!!
 				if (cell.getPiece()!=null) {
 					if (i!=to.getRow()) {
 						return false;
 					}
 					else {
-						// Is the destination cell and the piece is from the other side
+						// If it is the destination cell and the piece in that last cell is from the other side
 						if (cell.getPiece().getSide().equals(currentSide))
 							return false;
 					}
@@ -112,7 +115,7 @@ public class CheckMovesUtil {
 						return false;
 					}
 					else {
-						// Is the destination cell and the piece is from the other side
+						// If it is the destination cell and the piece in that last cell is from the other side
 						if (cell.getPiece().getSide().equals(currentSide))
 							return false;
 					}

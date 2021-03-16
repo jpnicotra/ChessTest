@@ -1,6 +1,6 @@
 /**
- * Provides the classes necessary to create a  
- * ChessBoard game with Players, Sides, Board and cells 
+ * Provides the base classes necessary to create a  
+ * Board game with Players, Sides, Board and cells 
  * 
  * @author jnicotra
  * @since 1.0
