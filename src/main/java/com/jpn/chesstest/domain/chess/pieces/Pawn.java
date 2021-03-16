@@ -59,7 +59,8 @@ public class Pawn extends Piece {
 					return false;
 				else {
 					CellBoard cell = game.getBoard().getCell(to);
-					if (cell.getPiece() != null)
+					// If this movement falls into another piece or also if this movement wasn't straight
+					if (cell.getPiece() != null || diffCols>0)
 						return false;
 					else
 						return true;
@@ -79,6 +80,8 @@ public class Pawn extends Piece {
 			if (diffCols == 1) {
 				CellBoard cell = game.getBoard().getCell(to);
 
+				// If this movement was diagonal and in the ending position
+				// there is no piece or that piece's from the same side return false
 				if (cell.getPiece() != null &&
 					(cell.getPiece().getSide().equals(getSide()) || 
 							cell.getPiece() == null))
