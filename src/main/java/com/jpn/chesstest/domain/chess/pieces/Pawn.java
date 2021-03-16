@@ -14,7 +14,7 @@ import com.jpn.chesstest.domain.chess.ChessSide;
  * @since 1.0
  */
 public class Pawn extends Piece {
-	private boolean firstMove = true;
+	private int moveNumber = 0;
 
 	/**
 	 * Default constructor
@@ -34,8 +34,17 @@ public class Pawn extends Piece {
 
 	public void setCurrentPosition(CellBoard currentPosition) {
 		super.setCurrentPosition(currentPosition);
-		this.firstMove = false;
+		this.moveNumber += 1;
 	}
+	
+	public void rollbackPosition (CellBoard currentPosition) {
+		if (moveNumber>0)
+			moveNumber-=1;
+		
+		// I am calling super method because local setCurrentPosition will add one movement to moveNumber
+		super.setCurrentPosition(currentPosition);
+	}
+
 
 	/**
 	 * Check if new position it's valid for this piece
@@ -94,11 +103,7 @@ public class Pawn extends Piece {
 	}
 
 	public boolean isFirstMove() {
-		return firstMove;
-	}
-
-	public void setFirstMove(boolean firstMove) {
-		this.firstMove = firstMove;
+		return moveNumber==0;
 	}
 
 	public Piece getPromotionPiece() {

@@ -87,6 +87,7 @@ public class ChessGame extends BoardGame {
 		}
 		
 		// If everything it's fine until now, set's new position of the selected piece
+		Piece back = cellTo.getPiece();
 		piece.setCurrentPosition(cellTo);
 		
 		// Get next player to simulate check status
@@ -96,7 +97,8 @@ public class ChessGame extends BoardGame {
 		Piece yourPieceInCheck = getPieceInCheck(next);
 		if (yourPieceInCheck !=null) {
 			// If this last move put player in check, rollbacks piece to starting position and throws KingInCheckException
-			piece.setCurrentPosition(cellFrom);
+			piece.rollbackPosition(cellFrom);
+			cellTo.setPiece(back);
 			throw new KingInCheckException(getCurrentPlayer(), move);
 		}
 		

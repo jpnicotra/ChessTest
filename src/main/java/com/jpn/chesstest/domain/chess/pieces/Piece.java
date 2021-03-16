@@ -60,6 +60,9 @@ public abstract class Piece {
 		this.currentPosition.setPiece (this);
 	}
 	
+	public void rollbackPosition (CellBoard currentPosition) {
+		this.setCurrentPosition(currentPosition);
+	}
 
 	public Side getSide() {
 		return side;
